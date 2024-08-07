@@ -4,7 +4,7 @@
   "description": "Test Automation of Respond.io Web App using Playwright with Typescript",
   "main": "index.js",
   "scripts": {
-    "test:single": "npx playwright test login.test.ts --project=Chrome",
+    "test:single": "npx playwright test addWorkspaceUser.test.ts --project=Chrome",
     "test:functional": "npx playwright test --project=Functional",
     "test:api": "npx playwright test --project=API",
     "allureReport": "allure serve",

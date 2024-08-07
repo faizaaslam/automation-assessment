@@ -1,4 +1,10 @@
 import {expect, Page} from '@playwright/test';
+import {generateRandomEmail} from "../../utilities/helpers";
+import * as fs from "fs";
+import path from "path";
+
+
+const jsonFilePath = path.join(__dirname,'..', '..', 'test-data', 'addWorkspaceTestData.json');
 
 export class AddWorkspaceUserPage {
     private page: Page;
@@ -24,9 +30,6 @@ export class AddWorkspaceUserPage {
    get addButton(){
         return this.page.locator("//span[text()='Add']")
    }
-   get addedUser(){
-        return this.page.locator("//div[text()='Owner - faiza.aslam2@yopmail.com']")
-   }
 
    constructor(page: Page) {
         this.page = page;
@@ -43,7 +46,8 @@ export class AddWorkspaceUserPage {
     async clickOnAddUserButton(){
        await this.addUserBtn.click();
     }
-    async enterEmailAddress(email:string){
+    async enterEmailAddress(){
+       const email = await this.updateEmailInJson()
        await this.emailField.type(email);
     }
     async selectAccessLevel(access:string){
@@ -53,6 +57,22 @@ export class AddWorkspaceUserPage {
     }
     async clickOnAddButton(){
        await  this.addButton.click();
+        await this.page.waitForTimeout(3000)
+    }
+    async verifyUserHasBeenAdded(access:string){
+       const email = await this.getEmailFromJson();
+       expect(await this.page.locator("//div[text()='"+access+" - "+email+"']")).toBeVisible();
+    }
+    async updateEmailInJson() {
+        const email = generateRandomEmail();
+        const data = JSON.parse(fs.readFileSync(jsonFilePath, 'utf8'));
+        data.userEmail = email;
+        fs.writeFileSync(jsonFilePath, JSON.stringify(data, null, 2), 'utf8');
+        return email;
+    }
+    async getEmailFromJson() {
+        const data = JSON.parse(fs.readFileSync(jsonFilePath, 'utf8'));
+        return data.userEmail;
     }
 
 

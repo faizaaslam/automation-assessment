@@ -23,11 +23,9 @@ test.describe('Workspace User Flow Test Suite', () => {
         await addWorkspaceUserPage.clickOnUserOption();
         await addWorkspaceUserPage.clickOnAddUserButton();
         expect(await addWorkspaceUserPage.addUserPopUp).toBeVisible();
-        await addWorkspaceUserPage.enterEmailAddress(workspaceUserTestData.userEmail);
+        await addWorkspaceUserPage.enterEmailAddress();
         await addWorkspaceUserPage.selectAccessLevel(workspaceUserTestData.accessLevel);
         await addWorkspaceUserPage.clickOnAddButton();
-        expect(await addWorkspaceUserPage.addedUser).toBeVisible();
-
-
+        await addWorkspaceUserPage.verifyUserHasBeenAdded(workspaceUserTestData.accessLevel);
     });
 });
