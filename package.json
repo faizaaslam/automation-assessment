@@ -1,0 +1,24 @@
+{
+  "name": "respond.io-assignment",
+  "version": "1.0.0",
+  "description": "Test Automation of Respond.io Web App using Playwright with Typescript",
+  "main": "index.js",
+  "scripts": {
+    "test:single": "npx playwright test login.test.ts --project=Chrome",
+    "test:functional": "npx playwright test --project=Functional",
+    "test:api": "npx playwright test --project=API",
+    "allureReport": "allure serve",
+    "htmlReport": "npx playwright show-report html-report"
+  },
+  "author": "Faiza A.",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.45.1"
+  },
+  "dependencies": {
+    "@types/node": "^20.14.9",
+    "allure-commandline": "^2.29.0",
+    "allure-playwright": "^3.0.0-beta.5",
+    "fs": "^0.0.1-security"
+  }
+}
